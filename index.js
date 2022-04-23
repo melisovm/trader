@@ -1,6 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const { trade } = require('./trader');
+const path = require('path');
+
 const app = express()
 const port = 3000
 
@@ -13,7 +15,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.sendFile(path.join(__dirname, '/views/index.html'));
 })
 
 app.post('/trade', async (req, res) => {
