@@ -6,8 +6,8 @@ const trade = async ({ ticker, strategy: { order_action, order_contracts } }) =>
       apiKey: process.env.API_KEY,
       apiSecret: process.env.API_SECRET,
     })
-    
-    const data = await _currentClient.order({
+
+    const data = await _currentClient.orderTest({
       type: 'MARKET',
       symbol: ticker,
       quantity: order_contracts,
@@ -18,7 +18,7 @@ const trade = async ({ ticker, strategy: { order_action, order_contracts } }) =>
 
     return data;
   } catch (e) {
-    console.error(e);
+    await Promise.reject(e);
   }
 }
 

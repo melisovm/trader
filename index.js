@@ -4,7 +4,7 @@ const { trade } = require('./trader');
 const path = require('path');
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -19,13 +19,17 @@ app.get('/', (req, res) => {
 })
 
 app.post('/trade', async (req, res) => {
-  const data = await trade(req.body)
+  try {
+    const data = await trade(req.body)
 
-  res.sendStatus(200);
-  res.send(data);
+    res.sendStatus(200);
+    res.send(data);
+  } catch (e) {
+    return res.status(400).send(e);
+  }
 })
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
