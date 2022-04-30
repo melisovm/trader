@@ -9,6 +9,15 @@ const trade = async (body) => {
       apiSecret: process.env.API_SECRET,
     })
 
+    if (process.env.MODE !== 'TEST') {
+      return await _currentClient.order({
+        type: 'MARKET',
+        symbol: ticker,
+        quantity: order_contracts,
+        side: order_action.toUpperCase(),
+      });
+    }
+
     return await _currentClient.orderTest({
       type: 'MARKET',
       symbol: ticker,
